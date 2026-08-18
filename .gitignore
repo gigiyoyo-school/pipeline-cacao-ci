@@ -1,0 +1,19 @@
+# Secrets
+.env
+
+# Environnement virtuel uv
+.venv/
+
+# Donnees generees
+data/raw/*.csv
+data/interim/
+data/output/*.parquet
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+
+# PyCharm
+.idea/
