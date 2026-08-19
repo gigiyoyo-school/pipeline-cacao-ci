@@ -1,0 +1,73 @@
+{
+  "genere_le": "2026-08-19T11:00:43",
+  "volumes": {
+    "lignes_extraites": 80000,
+    "lignes_conservees": 78800,
+    "colonnes_finales": 25
+  },
+  "normalisation_libelles": {
+    "region": {
+      "modalites_avant": 42,
+      "modalites_apres": 8,
+      "non_resolus": 0
+    },
+    "cooperative": {
+      "modalites_avant": 151,
+      "modalites_apres": 40,
+      "non_resolus": 0
+    }
+  },
+  "dedoublonnage": {
+    "lignes_avant": 80000,
+    "doublons_supprimes": 1200,
+    "lignes_apres": 78800
+  },
+  "imputation": {
+    "prix_impute": 1576,
+    "humidite_imputee": 3152
+  },
+  "validation": {
+    "valide": true,
+    "nb_lignes": 78800,
+    "controles_passes": [
+      "R1 volume : 78,800 lignes (seuil 70,000)",
+      "R2 unicite : aucun doublon sur id_pesee",
+      "R3 completude : 8 colonnes critiques sans valeur manquante",
+      "R4 domaine : tous les grades appartiennent au referentiel",
+      "R4 domaine : 8 regions, toutes normalisees",
+      "R5 bornes : tonnage, prix et humidite dans les plages metier",
+      "R6 integrite : tous les planteurs existent au referentiel",
+      "R6 integrite : toutes les cooperatives existent au referentiel",
+      "R7 coherence : region de la pesee identique a celle du planteur"
+    ],
+    "erreurs": [],
+    "avertissements": []
+  },
+  "anomalies": [
+    {
+      "anomalie": "tonnage extreme",
+      "critere": "> 1,236 kg (Q3 + 3 x IQR)",
+      "nb_lignes": 554,
+      "part_pct": 0.7,
+      "tonnage_concerne_kg": 818774.4,
+      "action": "signale, conserve"
+    },
+    {
+      "anomalie": "humidite hors norme export",
+      "critere": "> 8.0 %",
+      "nb_lignes": 23272,
+      "part_pct": 29.53,
+      "tonnage_concerne_kg": 7201095.7,
+      "action": "signale, conserve"
+    },
+    {
+      "anomalie": "prix atypique pour le grade",
+      "critere": "ecart > 30 % a la mediane du grade",
+      "nb_lignes": 21,
+      "part_pct": 0.03,
+      "tonnage_concerne_kg": 8873.4,
+      "action": "signale, conserve"
+    }
+  ],
+  "valeurs_manquantes_restantes": []
+}
