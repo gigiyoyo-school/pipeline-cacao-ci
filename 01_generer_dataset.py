@@ -119,6 +119,15 @@ MOIS_CAMPAGNE_PRINCIPALE = {10, 11, 12, 1, 2, 3}
 PRIME_BIO = 1.10               # le cacao certifie bio se paie 10 % de plus
 COEF_CAMPAGNE_INTERMEDIAIRE = 0.96   # prix garanti legerement inferieur
 
+# Prime de volume : un gros lot coute moins cher a manipuler et a transporter,
+# la cooperative le paie donc legerement mieux. Cet effet cree une correlation
+# entre prix et tonnage, sans laquelle la moyenne ponderee par le tonnage
+# donnerait exactement le meme resultat que la moyenne simple.
+SEUIL_GROS_LOT = 500.0         # kg
+SEUIL_PETIT_LOT = 100.0        # kg
+PRIME_VOLUME = 1.03
+DECOTE_PETIT_LOT = 0.97
+
 
 # ---------------------------------------------------------------------------
 # 1. Referentiel des cooperatives
@@ -251,21 +260,30 @@ def generer_pesees(
     dispersion = np.where(qualite == "Hors grade", 1.2, 0.5)
     humidite = np.clip(rng.normal(cible, dispersion), 3.5, 16).round(1)
 
+    # --- Quel tonnage ------------------------------------------------------
+    # Loi gamma, moyenne autour de 300 kg par apport, modulee par la taille
+    # de la plantation. Le tonnage est calcule avant le prix, car il influe
+    # sur lui : voir la prime de volume ci-dessous.
+    facteur = (livreurs["superficie_ha"].to_numpy() / 4.0) ** 0.6
+    tonnage = (rng.gamma(2.0, 130.0, n_uniques) * facteur).clip(5, None).round(1)
+
     # --- Quel prix ---------------------------------------------------------
-    # Prix tire dans les bornes du bareme du grade, puis ajuste :
-    # prime bio de 10 %, et leger decrochage en campagne intermediaire.
+    # Prix tire dans les bornes du bareme du grade, puis ajuste par trois
+    # effets : la prime bio, le decrochage de la campagne intermediaire, et
+    # une prime de volume. Les gros lots coutent moins cher a manipuler et a
+    # transporter, la cooperative les paie donc un peu mieux ; les tres petits
+    # apports subissent l'effet inverse.
     prix_min = np.array([QUALITES[g][2] for g in qualite])
     prix_max = np.array([QUALITES[g][3] for g in qualite])
     prix = rng.uniform(prix_min, prix_max)
     prix = prix * np.where(livreurs["certifie_bio"].to_numpy(), PRIME_BIO, 1.0)
     prix = prix * np.where(est_principale, 1.0, COEF_CAMPAGNE_INTERMEDIAIRE)
+    prix = prix * np.select(
+        [tonnage >= SEUIL_GROS_LOT, tonnage < SEUIL_PETIT_LOT],
+        [PRIME_VOLUME, DECOTE_PETIT_LOT],
+        default=1.0,
+    )
     prix = prix.round(0).astype(int)
-
-    # --- Quel tonnage ------------------------------------------------------
-    # Loi gamma, moyenne autour de 300 kg par apport, moduler par la taille
-    # de la plantation.
-    facteur = (livreurs["superficie_ha"].to_numpy() / 4.0) ** 0.6
-    tonnage = (rng.gamma(2.0, 130.0, n_uniques) * facteur).clip(5, None).round(1)
 
     pesees = pd.DataFrame(
         {
