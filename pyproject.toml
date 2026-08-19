@@ -1,0 +1,21 @@
+[project]
+name = "pipeline-cacao-ci"
+version = "0.1.0"
+description = "Projet de fin de module Data Engineering : entrepot de donnees de la filiere cacao ivoirienne"
+requires-python = ">=3.12"
+dependencies = [
+    "pandas>=2.2",
+    "numpy>=2.0",
+    "pyarrow>=17.0",          # ecriture et lecture Parquet
+    "sqlalchemy>=2.0",        # connexion a Supabase
+    "psycopg2-binary>=2.9",   # driver PostgreSQL
+    "python-dotenv>=1.0",
+    "rich>=13.7",             # affichage console
+    "matplotlib>=3.9",        # tableau de bord
+]
+
+[dependency-groups]
+dev = [
+    "jupyter>=1.1",           # notebook de rendu
+    "pytest>=8.3",            # tests de qualite
+]
