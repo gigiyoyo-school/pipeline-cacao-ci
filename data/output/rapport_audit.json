@@ -1,0 +1,39 @@
+{
+  "genere_le": "2026-08-19T10:25:00",
+  "sources": {
+    "pesees": {
+      "fichier": "pesees_cacao_ci_80k.csv",
+      "nb_lignes": 80000
+    },
+    "planteurs": {
+      "fichier": "referentiel_planteurs.csv",
+      "nb_lignes": 5000
+    },
+    "cooperatives": {
+      "fichier": "referentiel_cooperatives.csv",
+      "nb_lignes": 40
+    }
+  },
+  "constats": {
+    "valeurs_manquantes": {
+      "humidite_pct": 3213
+    },
+    "doublons_id_pesee": 1200,
+    "doublons_lignes_completes": 1200,
+    "variantes_saisie": {
+      "region": 34,
+      "cooperative": 111,
+      "qualite": 0
+    },
+    "prix_aberrants": 1609,
+    "periode": {
+      "debut": "2022-10-01",
+      "fin": "2024-09-30"
+    },
+    "integrite": {
+      "orphelins_planteur": 0,
+      "orphelins_cooperative": 0,
+      "orphelins_region": 0
+    }
+  }
+}
