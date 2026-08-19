@@ -5,6 +5,8 @@ Boite a outils partagee par tous les scripts du projet.
 from __future__ import annotations
 
 import os
+import re
+import unicodedata
 from pathlib import Path
 
 import pandas as pd
@@ -51,6 +53,35 @@ def get_engine():
     if url.startswith("postgresql://"):
         url = url.replace("postgresql://", "postgresql+psycopg2://", 1)
     return sqlalchemy.create_engine(url, pool_pre_ping=True)
+
+
+# ---------------------------------------------------------------------------
+# Normalisation des libelles
+# ---------------------------------------------------------------------------
+def normaliser(texte) -> str:
+    """
+    Reduit un libelle a une forme canonique servant de cle de comparaison.
+
+    Accents supprimes, minuscules, tout caractere non alphanumerique remplace
+    par une espace, espaces multiples reduits a une seule.
+
+    Exemple: 'San Pedro', ' SAN  PEDRO ' et 'San-Pedro' donnent tous 'san pedro'.
+    """
+    if not isinstance(texte, str):
+        return ""
+    decompose = unicodedata.normalize("NFKD", texte)
+    sans_accent = "".join(c for c in decompose if not unicodedata.combining(c))
+    return re.sub(r"[^a-z0-9]+", " ", sans_accent.lower()).strip()
+
+
+def construire_lookup(valeurs) -> dict[str, str]:
+    """
+    Construit un dictionnaire forme normalisee -> libelle officiel.
+
+    Les valeurs de reference viennent des referentiels : ce sont elles qui
+    font foi, pas les libelles saisis sur la bascule.
+    """
+    return {normaliser(valeur): valeur for valeur in valeurs}
 
 
 # ---------------------------------------------------------------------------
