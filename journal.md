@@ -175,5 +175,5 @@ Résolution des clés étrangères : 78 800 lignes sur 78 800, aucune clé non r
 - [x] Créer le dépôt GitHub public et partager le lien
 - [ ] Rédiger la déclaration d'usage des outils d'IA pour l'introduction du rapport
 - [x] Créer le projet Supabase
-- [ ] Capture d'écran du SQL Editor avec les 6 tables
-- [ ] Capture du Table Editor avec le nombre de lignes
+- [x] Capture d'écran du SQL Editor avec les 6 tables
+- [x] Capture du Table Editor avec le nombre de lignes
