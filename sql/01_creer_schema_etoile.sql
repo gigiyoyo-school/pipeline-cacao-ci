@@ -75,7 +75,8 @@ CREATE TABLE IF NOT EXISTS dim_date (
     id_date        SERIAL PRIMARY KEY,
     date_complete  DATE NOT NULL UNIQUE,
     annee          INTEGER,
-    mois           INTEGER,                    -- 1 a 12
+    mois           INTEGER,                    -- 1 a 12 (calendaire)
+    mois_campagne  INTEGER,                    -- 1 = octobre, 12 = septembre
     nom_mois       TEXT,
     trimestre      INTEGER,
     semaine        INTEGER,
@@ -85,6 +86,10 @@ CREATE TABLE IF NOT EXISTS dim_date (
     campagne       TEXT,                       -- Principale (oct-mars) ou Intermediaire
     saison         TEXT                        -- 2022-2023, 2023-2024
 );
+
+-- Pour un schema cree avant l'ajout de mois_campagne : la colonne est
+-- ajoutee sans toucher aux donnees existantes.
+ALTER TABLE dim_date ADD COLUMN IF NOT EXISTS mois_campagne INTEGER;
 
 -- ------------------------------------------------------------
 -- TABLE DE FAITS : une ligne = une pesee

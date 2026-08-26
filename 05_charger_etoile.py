@@ -1,6 +1,14 @@
 """
 Peuple les cinq dimensions puis la table de faits dans Supabase.
 
+L'ordre n'est pas negociable : une cle etrangere ne peut pointer que vers une
+ligne qui existe deja. Les dimensions d'abord, les faits ensuite, et parmi les
+dimensions, dim_region avant dim_cooperative avant dim_planteur.
+
+Les cles techniques sont generees par PostgreSQL (SERIAL). Le script les relit
+donc apres insertion : ce sont les identifiants reellement attribues par la
+base qui font foi, pas ceux qu'on aurait calcules en memoire.
+
 Mode sans base :
     uv run 05_charger_etoile.py --dry-run
 construit les six tables, simule l'attribution des cles, controle l'integrite
@@ -152,6 +160,12 @@ def construire_dim_date(pesees: pd.DataFrame) -> pd.DataFrame:
     )
     annee_saison = np.where(dim["mois"] >= 10, dim["annee"], dim["annee"] - 1)
     dim["saison"] = [f"{a}-{a + 1}" for a in annee_saison]
+
+    # Rang du mois dans la campagne : octobre = 1, septembre = 12.
+    # Sans cette colonne, un tri par mois calendaire placerait janvier avant
+    # octobre a l'interieur d'une meme saison, ce qui fausse toute comparaison
+    # d'un mois au precedent.
+    dim["mois_campagne"] = ((dim["mois"] - 10) % 12) + 1
 
     return dim
 
@@ -447,6 +461,30 @@ def simuler_lookups(dimensions: dict[str, pd.DataFrame]) -> dict[str, dict]:
     }
 
 
+def ajouter_cles_simulees(
+    dimensions: dict[str, pd.DataFrame], lookups: dict[str, dict]
+) -> dict[str, pd.DataFrame]:
+    """
+    Ajoute la colonne de cle technique aux dimensions, en mode --dry-run.
+
+    Sans elle, la copie Parquet ne refleterait pas ce que contient la base :
+    on ne pourrait pas rejouer les requetes analytiques en local sur ces
+    fichiers pour verifier une jointure.
+    """
+    correspondances = {
+        "dim_region": ("id_region", "nom_region", "region"),
+        "dim_cooperative": ("id_cooperative", "code_cooperative", "cooperative"),
+        "dim_planteur": ("id_planteur", "code_planteur", "planteur"),
+        "dim_qualite": ("id_qualite", "nom_qualite", "qualite"),
+        "dim_date": ("id_date", "date_complete", "date"),
+    }
+    for table, (colonne_cle, colonne_code, cle_lookup) in correspondances.items():
+        dim = dimensions[table].copy()
+        dim.insert(0, colonne_cle, dim[colonne_code].map(lookups[cle_lookup]).astype(int))
+        dimensions[table] = dim
+    return dimensions
+
+
 def main() -> None:
     mode_seul = "--dry-run" in sys.argv
 
@@ -485,6 +523,7 @@ def main() -> None:
         )
 
         alerte("Mode sans base : rien n'a ete ecrit dans Supabase.")
+        dimensions = ajouter_cles_simulees(dimensions, lookups)
     else:
         engine = get_engine()
         try:

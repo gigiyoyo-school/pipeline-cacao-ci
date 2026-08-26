@@ -4,6 +4,7 @@ Boite a outils partagee par tous les scripts du projet.
 
 from __future__ import annotations
 
+import decimal
 import os
 import re
 import unicodedata
@@ -65,7 +66,9 @@ def normaliser(texte) -> str:
     Accents supprimes, minuscules, tout caractere non alphanumerique remplace
     par une espace, espaces multiples reduits a une seule.
 
-    Exemple: 'San Pedro', ' SAN  PEDRO ' et 'San-Pedro' donnent tous 'san pedro'.
+    'San Pedro', ' SAN  PEDRO ' et 'San-Pedro' donnent tous 'san pedro'.
+    C'est ce qui permet de rattraper les erreurs de saisie du terrain sans
+    ecrire une regle par variante rencontree.
     """
     if not isinstance(texte, str):
         return ""
@@ -110,10 +113,18 @@ def echec(texte: str) -> None:
 
 def format_valeur(valeur) -> str:
     """Formate une valeur pour l'affichage dans une table rich."""
+    # PostgreSQL renvoie les colonnes NUMERIC sous forme de Decimal : sans cette
+    # conversion, elles s'afficheraient telles quelles, sans mise en forme.
+    if isinstance(valeur, decimal.Decimal):
+        valeur = float(valeur)
+
     if valeur is None or (isinstance(valeur, float) and pd.isna(valeur)):
         return "-"
     if isinstance(valeur, float):
-        return f"{valeur:,.2f}"
+        # Deux decimales au maximum, sans zeros inutiles : 850.0 -> 850,
+        # 5142.60 -> 5 142.6
+        texte = f"{valeur:,.2f}"
+        return texte.rstrip("0").rstrip(".") if "." in texte else texte
     if isinstance(valeur, bool):
         return "oui" if valeur else "non"
     if isinstance(valeur, int):
