@@ -132,9 +132,48 @@ Le point à défendre : détecter n'est pas supprimer. Un apport de 2 400 kg est
 
 ---
 
-## À faire
+## Étape 3 : schéma en étoile
+
+### Convention de nommage
+
+`id_xxx` désigne une clé technique entière générée par PostgreSQL, `code_xxx` le code métier issu de la source. La source appelle `id_planteur` un code au format `PLT00042` ; dans `dim_planteur` ce code devient `code_planteur`, et `id_planteur` désigne la clé `SERIAL`. Sans cette convention, les jointures deviennent ambiguës.
+
+### Structure retenue
+
+| Table | Lignes | Rôle |
+|---|---|---|
+| `dim_region` | 8 | zone de production, port d'exportation, nombre de coopératives et de planteurs |
+| `dim_cooperative` | 40 | code, région de rattachement, année de création, certification, nombre d'adhérents |
+| `dim_planteur` | 5 000 | coopérative et région de rattachement, superficie, année d'adhésion, certification bio |
+| `dim_qualite` | 4 | rang, humidité maximale tolérée, bornes de prix, exportable ou non |
+| `dim_date` | 731 | calendrier continu, avec campagne et saison précalculées |
+| `faits_pesees` | 78 800 | 5 clés étrangères, 5 mesures, 4 attributs de traçabilité |
+
+`dim_cooperative` porte sa région et `dim_planteur` porte sa coopérative et sa région. Ce n'est pas du flocon puisque la table de faits pointe directement vers les trois : c'est une dimension qui connaît son parent, ce qui permet de valider la cohérence côté base.
+
+### Points à défendre en soutenance
+
+**Pourquoi des clés `SERIAL` plutôt que les codes métier ?** Un entier se compare plus vite qu'une chaîne dans une jointure, et la clé reste stable si une coopérative est renommée ou si un planteur change d'affectation.
+
+**Pourquoi `id_pesee` reste en clé primaire des faits ?** C'est une dimension dégénérée : un identifiant métier conservé dans la table de faits, sans dimension propre parce qu'il n'a aucun attribut à porter. Il assure la traçabilité jusqu'au ticket de pesée d'origine.
+
+**Pourquoi la campagne est-elle dans `dim_date` et non calculée dans les requêtes ?** Parce qu'une règle métier écrite une fois dans la dimension ne peut pas diverger entre deux requêtes. Toute analyse de saisonnalité devient un `GROUP BY campagne`.
+
+**Pourquoi des index sur les clés étrangères ?** PostgreSQL indexe automatiquement les clés primaires, jamais les clés étrangères. Sans ces index, chaque `JOIN` sur la table de faits impose un parcours complet des 78 800 lignes.
+
+### Contrôles au chargement
+
+Résolution des clés étrangères : 78 800 lignes sur 78 800, aucune clé non résolue. Deux contrôles supplémentaires côté base après chargement : jointure sur les cinq dimensions (le compte doit être identique à celui des faits) et vérification que la région de chaque pesée correspond à celle de sa coopérative.
+
+### Volumes obtenus
+
+24 345 tonnes de cacao, 20,73 milliards de FCFA de valeur d'achat sur deux campagnes.
+
+---
 
 - [x] Confirmer auprès de l'enseignant le travail sans binôme
 - [x] Créer le dépôt GitHub public et partager le lien
 - [ ] Rédiger la déclaration d'usage des outils d'IA pour l'introduction du rapport
-- [ ] Créer le projet Supabase pour l'étape 3
+- [x] Créer le projet Supabase
+- [ ] Capture d'écran du SQL Editor avec les 6 tables
+- [ ] Capture du Table Editor avec le nombre de lignes
