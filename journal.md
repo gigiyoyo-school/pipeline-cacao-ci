@@ -171,9 +171,49 @@ Résolution des clés étrangères : 78 800 lignes sur 78 800, aucune clé non r
 
 ---
 
+## Étape 4 : requêtes analytiques
+
+### Deux pièges rencontrés
+
+**`ROUND` sur un flottant.** En PostgreSQL, `ROUND(valeur, decimales)` n'existe que pour le type `numeric`, pas pour `double precision`. Dès qu'une division produit un flottant, la requête échoue. Toutes les expressions arrondies sont donc converties explicitement : `ROUND((expression)::numeric, 1)`.
+
+**Ordre chronologique d'une campagne.** Trier par saison puis par mois calendaire place janvier avant octobre à l'intérieur d'une même saison. La fonction `LAG` comparait donc chaque mois au mauvais mois précédent. Correction : une colonne `mois_campagne` dans `dim_date`, valant 1 pour octobre et 12 pour septembre. Le tri devient chronologiquement juste, et les graphiques de saisonnalité s'ordonnent naturellement.
+
+### Les six requêtes
+
+| Requête | Technique | Question métier |
+|---|---|---|
+| 1 | JOIN + GROUP BY + SUM() OVER () | production et prix par région |
+| 2 | JOIN + FILTER | prix et conformité export par qualité |
+| 3 | JOIN sur dim_date | saisonnalité mensuelle |
+| 4 | Jointure quadruple | classement des coopératives |
+| 5 | CTE + RANK + LAG + SUM() OVER | classement mensuel des régions et variation |
+| 6 | JOIN + GROUP BY | effet de la certification bio |
+
+### Résultats et lecture métier
+
+**Production par région.** Soubré porte 21,1 % du tonnage, San Pedro 16,1 %, Bondoukou seulement 4,8 %. La concentration au Sud-Ouest correspond à la géographie réelle de la cacaoculture ivoirienne. Le prix moyen pondéré varie peu d'une région à l'autre, de 848 à 858 FCFA/kg : cohérent avec un prix garanti fixé nationalement, l'écart résiduel venant du mix de qualités et de la part de bio.
+
+**Prix par qualité.** Grade A à 1 017 FCFA/kg en moyenne pondérée contre 1 006 en moyenne simple, soit 11 FCFA d'écart. La moyenne simple sous-estime le prix réellement payé, parce qu'elle donne le même poids à une pesée de 12 kg qu'à une pesée de 2 000 kg.
+
+**Conformité à la norme d'exportation.** 99,8 % du Grade A respecte le seuil de 8 % d'humidité, contre 82,5 % du Grade B et 13,3 % du Grade C. C'est le constat le plus exploitable du projet : le Grade C est massivement hors norme, ce qui justifierait un plan de formation au séchage dans les coopératives concernées.
+
+**Saisonnalité.** Pic à 2 209 tonnes en novembre, creux à 372 tonnes en août, soit un rapport de 1 à 6 entre le mois le plus fort et le plus faible. La part de Grade A passe de 38 % en campagne principale à 28 % en campagne intermédiaire : le cacao séché pendant l'harmattan est de meilleure qualité, et le prix moyen suit, de 875 à 795 FCFA/kg.
+
+**Certification bio.** À grade égal, la prime est nette : 1 101 contre 1 003 FCFA/kg sur le Grade A, soit environ 10 %. La coopérative en tête du classement, COOP-SOU-003, affiche 41 % de planteurs certifiés et le meilleur prix moyen du classement, 870 FCFA/kg. La certification est le levier de revenu le plus visible du jeu de données.
+
+### Choix d'outillage
+
+Les requêtes sont définies une seule fois, dans `requetes.py`. Le script `06_requetes_sql.py` les exécute et régénère `sql/02_requetes_analytiques.sql` à partir de ce module : le fichier collé dans le SQL Editor ne peut pas diverger de celui qui tourne dans le pipeline.
+
+Un mode `--local` exécute les mêmes requêtes sur les copies Parquet via DuckDB, qui comprend la syntaxe PostgreSQL utilisée ici. Cela permet de mettre au point une requête sans solliciter la base, et de travailler sans connexion.
+
+## À faire
+
 - [x] Confirmer auprès de l'enseignant le travail sans binôme
 - [x] Créer le dépôt GitHub public et partager le lien
 - [ ] Rédiger la déclaration d'usage des outils d'IA pour l'introduction du rapport
 - [x] Créer le projet Supabase
 - [x] Capture d'écran du SQL Editor avec les 6 tables
 - [x] Capture du Table Editor avec le nombre de lignes
+- [x] Captures d'au moins 2 requêtes analytiques dans le SQL Editor
