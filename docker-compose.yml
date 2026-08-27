@@ -1,0 +1,94 @@
+# ============================================================
+# Environnement Airflow local du pipeline cacao
+#
+#   docker compose up -d        demarrer
+#   docker compose ps           etat des services
+#   docker compose logs -f      suivre les logs
+#   docker compose down         arreter
+#   docker compose down -v      arreter et supprimer les metadonnees
+#
+# Interface web : http://localhost:8080  (admin / admin)
+#
+# La cle "version:" des anciens tutoriels n'est plus utilisee par Docker
+# Compose v2, qui affiche un avertissement si elle est presente.
+# ============================================================
+
+x-airflow-commun: &airflow-commun
+  # &airflow-commun definit un bloc reutilisable, *airflow-commun le rappelle.
+  # Les trois services Airflow partagent ainsi la meme configuration.
+  build: .
+  environment:
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow_secret@postgres/airflow_db
+    AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+    # Le dossier des DAG pointe dans le projet monte : un seul montage suffit
+    AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/projet/dags
+    PIPELINE_CACAO_DIR: /opt/airflow/projet
+    MPLBACKEND: Agg
+    # Chaine Supabase, lue dans le fichier .env place a cote de ce compose.
+    # Elle n'est jamais ecrite en clair ici : le fichier peut etre commite.
+    SUPABASE_URL: ${SUPABASE_URL:-}
+  volumes:
+    # Le projet entier est monte : editer un script sur la machine hote suffit,
+    # sans reconstruire l'image. Les donnees produites restent accessibles.
+    - ./:/opt/airflow/projet
+    - ./logs:/opt/airflow/logs
+  depends_on:
+    postgres:
+      condition: service_healthy
+
+services:
+  # ---- Base de metadonnees d'Airflow ----
+  # A ne pas confondre avec Supabase : celle-ci stocke l'etat des DAG et des
+  # taches, pas les donnees cacao.
+  postgres:
+    image: postgres:15-alpine
+    container_name: cacao_airflow_postgres
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow_secret
+      POSTGRES_DB: airflow_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      # Les autres services attendent que ce test passe avant de demarrer
+      test: ['CMD', 'pg_isready', '-U', 'airflow']
+      interval: 5s
+      retries: 10
+
+  # ---- Initialisation : migrations et creation du compte admin ----
+  # Ce service tourne une fois puis s'arrete, c'est le comportement attendu.
+  airflow-init:
+    <<: *airflow-commun
+    container_name: cacao_airflow_init
+    entrypoint: /bin/bash
+    command:
+      - -c
+      - |
+        airflow db migrate
+        airflow users create \
+          --username admin --password admin \
+          --firstname Data --lastname Engineer \
+          --role Admin --email admin@example.com || true
+    restart: "no"
+
+  # ---- Interface web ----
+  airflow-webserver:
+    <<: *airflow-commun
+    container_name: cacao_airflow_webserver
+    command: webserver
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  # ---- Ordonnanceur : c'est lui qui declenche les taches ----
+  airflow-scheduler:
+    <<: *airflow-commun
+    container_name: cacao_airflow_scheduler
+    command: scheduler
+    restart: unless-stopped
+
+volumes:
+  # Volume nomme : les metadonnees survivent a un docker compose down
+  postgres_data:

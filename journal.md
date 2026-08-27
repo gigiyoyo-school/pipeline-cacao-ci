@@ -240,13 +240,61 @@ Un paragraphe par graphique, comme le demande le critère 3.
 
 Les deux saisons se ressemblent beaucoup parce que le générateur leur applique la même loi saisonnière. Sur des données réelles, les aléas climatiques créeraient des écarts d'une campagne à l'autre. C'est une limite du jeu de données synthétique, à signaler dans la section 11 du rapport.
 
+---
+
+## Étape 6 : orchestration et conteneurisation
+
+### Le DAG n'implémente rien
+
+Chaque tâche importe le module de l'étape correspondante et appelle son `main()`. Le code qui tourne la nuit est donc exactement celui qui a été validé en local. Réimplémenter les traitements dans le DAG créerait deux versions du pipeline, qui divergeraient à la première correction.
+
+Détail technique : les fichiers d'étape commencent par un chiffre, ce qui interdit un `import` classique. `importlib.import_module("03_transformation")` permet de les charger par leur nom.
+
+Autre détail qui compte : l'import se fait **à l'intérieur** de la fonction de tâche, pas au niveau du module. Airflow analyse tous les fichiers de DAG en permanence, et cette analyse doit prendre quelques millisecondes. Importer pandas et matplotlib dès l'analyse ralentirait l'ordonnanceur entier.
+
+### Les neuf tâches
+
+`generation_dataset` → `extraction_audit` → `transformation` → `controle_qualite` → `creation_schema` → `chargement_etoile` → `requetes_analytiques` → `tableau_de_bord` → `archivage`
+
+Le barème en demande quatre au minimum.
+
+`controle_qualite` est la seule tâche qui contient de la logique propre au DAG : elle applique les sept règles de manière **bloquante**. La fonction `valider()` ne lève jamais d'exception, elle renvoie la liste complète des problèmes ; c'est la tâche qui décide d'arrêter le pipeline. Ce partage des rôles permet de journaliser tous les défauts d'un coup au lieu de s'arrêter au premier, et rend la fonction testable sans capture d'exception.
+
+Planification : `0 22 * * *`, tous les jours à 22h00, après la fermeture des bascules. Deux tentatives espacées de cinq minutes, délai maximum d'une heure par tâche, `max_active_runs=1` puisque les étapes se transmettent des fichiers.
+
+### Conteneurisation
+
+L'image part de `apache/airflow:2.10.5-python3.11` et non de `python:slim`. Installer Airflow à la main dans une image Python nue échoue presque systématiquement : plus de 600 dépendances transitives à concilier. L'image officielle contient déjà Airflow, son utilisateur et son point d'entrée.
+
+Le `requirements.txt` du conteneur n'épingle **ni Airflow ni SQLAlchemy** : c'est le fichier de contraintes officiel qui fixe leurs versions. Point important à savoir défendre : Airflow 2.10 exige encore SQLAlchemy 1.4, alors que le projet utilise SQLAlchemy 2.0 en local. Le code a été écrit pour fonctionner avec les deux branches, `engine.begin()`, `text()` et `Result.scalar_one()` existant depuis la 1.4. Épingler SQLAlchemy 2.0 dans le conteneur casserait Airflow.
+
+Le `docker-compose.yml` déclare quatre services : la base de métadonnées PostgreSQL, un service d'initialisation qui joue les migrations et crée le compte admin, l'interface web et l'ordonnanceur. Le bloc `x-airflow-commun` factorise la configuration partagée par les trois services Airflow.
+
+Un seul montage suffit : le projet entier est monté dans `/opt/airflow/projet`, et `AIRFLOW__CORE__DAGS_FOLDER` pointe vers son sous-dossier `dags`. Éditer un script sur la machine hôte suffit, sans reconstruire l'image.
+
+### Erreur rencontrée au build : conflit de versions
+
+Premier `docker compose up` en échec, avec `ResolutionImpossible` sur pandas. Le fichier de contraintes d'Airflow 2.10.5 impose `pandas==2.1.4`, alors que le `requirements.txt` demandait `pandas==2.2.3`, la version utilisée en local. Deux instructions contradictoires passées à pip dans la même commande.
+
+Règle qui en découle : un paquet figurant dans le fichier de contraintes d'Airflow ne peut pas être épinglé librement. Les versions du `requirements.txt` du conteneur ont donc été recopiées telles quelles depuis les contraintes officielles, à l'exception de matplotlib, qui n'y figure pas et reste libre.
+
+Vérification faite avant de relancer le build : la chaîne complète, de la génération au tableau de bord, a été rejouée dans un environnement aux versions du conteneur (pandas 2.1.4, numpy 1.26.4, pyarrow 16.1.0). Aucune adaptation du code n'a été nécessaire.
+
+Conséquence à assumer : le projet tourne avec pandas 2.2 en local et pandas 2.1.4 dans le conteneur. C'est acceptable ici car aucune fonctionnalité propre à la 2.2 n'est utilisée, mais dans un vrai projet on alignerait la version locale sur celle du conteneur.
+
+### Point de vigilance
+
+La base de métadonnées d'Airflow et Supabase sont deux bases distinctes. La première stocke l'état des DAG et des tâches, la seconde les données cacao. La confusion entre les deux est une question classique en soutenance.
+
 ## À faire
 
 - [x] Confirmer auprès de l'enseignant le travail sans binôme
 - [x] Créer le dépôt GitHub public et partager le lien
 - [ ] Rédiger la déclaration d'usage des outils d'IA pour l'introduction du rapport
 - [x] Créer le projet Supabase
-- [x] Capture d'écran du SQL Editor avec les 6 tables
-- [x] Capture du Table Editor avec le nombre de lignes
-- [x] Captures d'au moins 2 requêtes analytiques dans le SQL Editor
+- [ ] Capture d'écran du SQL Editor avec les 6 tables
+- [ ] Capture du Table Editor avec le nombre de lignes
+- [ ] Captures d'au moins 2 requêtes analytiques dans le SQL Editor
 - [ ] Insérer les 6 graphiques commentés dans la section 9 du rapport
+- [ ] Capture de l'interface Airflow avec le DAG en vue Graph
+- [ ] Capture de docker compose ps avec les services actifs

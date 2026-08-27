@@ -1,0 +1,39 @@
+# Dependances installees dans l'image Airflow.
+#
+# REGLE A RETENIR
+# Airflow publie pour chaque version un fichier de contraintes qui fige les
+# versions de plusieurs centaines de paquets, dont pandas et numpy. Ce fichier
+# est passe a pip via --constraint dans le Dockerfile.
+#
+# Un paquet present dans ce fichier de contraintes ne peut donc pas etre
+# epingle librement ici : demander pandas==2.2.3 alors que la contrainte dit
+# pandas==2.1.4 fait echouer le build avec une erreur ResolutionImpossible.
+#
+# Les versions ci-dessous sont celles imposees par les contraintes d'Airflow
+# 2.10.5 sous Python 3.11, recopiees a l'identique. Elles sont donc a revoir
+# en cas de changement de version d'Airflow :
+# https://raw.githubusercontent.com/apache/airflow/constraints-2.10.5/constraints-3.11.txt
+#
+# Airflow et SQLAlchemy ne figurent volontairement pas dans cette liste :
+# ils sont deja installes dans l'image de base, et SQLAlchemy y est en 1.4,
+# branche exigee par Airflow 2.10. Le code du projet fonctionne avec les deux
+# branches, engine.begin(), text() et Result.scalar_one() existant depuis 1.4.
+
+# Manipulation de donnees (versions imposees par les contraintes Airflow)
+pandas==2.1.4
+numpy==1.26.4
+pyarrow==16.1.0          # lecture et ecriture Parquet
+
+# Base de donnees (versions imposees par les contraintes Airflow)
+psycopg2-binary==2.9.10  # driver PostgreSQL (Supabase)
+python-dotenv==1.0.1     # lecture du fichier .env
+
+# Affichage console (version imposee par les contraintes Airflow)
+rich==13.9.4
+
+# Qualite (version imposee par les contraintes Airflow)
+pytest==8.3.4
+
+# Visualisation : matplotlib n'est pas dans le fichier de contraintes,
+# sa version est donc libre.
+matplotlib==3.9.2
