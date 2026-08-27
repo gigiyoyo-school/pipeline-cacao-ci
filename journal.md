@@ -132,9 +132,121 @@ Le point à défendre : détecter n'est pas supprimer. Un apport de 2 400 kg est
 
 ---
 
+## Étape 3 : schéma en étoile
+
+### Convention de nommage
+
+`id_xxx` désigne une clé technique entière générée par PostgreSQL, `code_xxx` le code métier issu de la source. La source appelle `id_planteur` un code au format `PLT00042` ; dans `dim_planteur` ce code devient `code_planteur`, et `id_planteur` désigne la clé `SERIAL`. Sans cette convention, les jointures deviennent ambiguës.
+
+### Structure retenue
+
+| Table | Lignes | Rôle |
+|---|---|---|
+| `dim_region` | 8 | zone de production, port d'exportation, nombre de coopératives et de planteurs |
+| `dim_cooperative` | 40 | code, région de rattachement, année de création, certification, nombre d'adhérents |
+| `dim_planteur` | 5 000 | coopérative et région de rattachement, superficie, année d'adhésion, certification bio |
+| `dim_qualite` | 4 | rang, humidité maximale tolérée, bornes de prix, exportable ou non |
+| `dim_date` | 731 | calendrier continu, avec campagne et saison précalculées |
+| `faits_pesees` | 78 800 | 5 clés étrangères, 5 mesures, 4 attributs de traçabilité |
+
+`dim_cooperative` porte sa région et `dim_planteur` porte sa coopérative et sa région. Ce n'est pas du flocon puisque la table de faits pointe directement vers les trois : c'est une dimension qui connaît son parent, ce qui permet de valider la cohérence côté base.
+
+### Points à défendre en soutenance
+
+**Pourquoi des clés `SERIAL` plutôt que les codes métier ?** Un entier se compare plus vite qu'une chaîne dans une jointure, et la clé reste stable si une coopérative est renommée ou si un planteur change d'affectation.
+
+**Pourquoi `id_pesee` reste en clé primaire des faits ?** C'est une dimension dégénérée : un identifiant métier conservé dans la table de faits, sans dimension propre parce qu'il n'a aucun attribut à porter. Il assure la traçabilité jusqu'au ticket de pesée d'origine.
+
+**Pourquoi la campagne est-elle dans `dim_date` et non calculée dans les requêtes ?** Parce qu'une règle métier écrite une fois dans la dimension ne peut pas diverger entre deux requêtes. Toute analyse de saisonnalité devient un `GROUP BY campagne`.
+
+**Pourquoi des index sur les clés étrangères ?** PostgreSQL indexe automatiquement les clés primaires, jamais les clés étrangères. Sans ces index, chaque `JOIN` sur la table de faits impose un parcours complet des 78 800 lignes.
+
+### Contrôles au chargement
+
+Résolution des clés étrangères : 78 800 lignes sur 78 800, aucune clé non résolue. Deux contrôles supplémentaires côté base après chargement : jointure sur les cinq dimensions (le compte doit être identique à celui des faits) et vérification que la région de chaque pesée correspond à celle de sa coopérative.
+
+### Volumes obtenus
+
+24 345 tonnes de cacao, 20,73 milliards de FCFA de valeur d'achat sur deux campagnes.
+
+---
+
+## Étape 4 : requêtes analytiques
+
+### Deux pièges rencontrés
+
+**`ROUND` sur un flottant.** En PostgreSQL, `ROUND(valeur, decimales)` n'existe que pour le type `numeric`, pas pour `double precision`. Dès qu'une division produit un flottant, la requête échoue. Toutes les expressions arrondies sont donc converties explicitement : `ROUND((expression)::numeric, 1)`.
+
+**Ordre chronologique d'une campagne.** Trier par saison puis par mois calendaire place janvier avant octobre à l'intérieur d'une même saison. La fonction `LAG` comparait donc chaque mois au mauvais mois précédent. Correction : une colonne `mois_campagne` dans `dim_date`, valant 1 pour octobre et 12 pour septembre. Le tri devient chronologiquement juste, et les graphiques de saisonnalité s'ordonnent naturellement.
+
+### Les six requêtes
+
+| Requête | Technique | Question métier |
+|---|---|---|
+| 1 | JOIN + GROUP BY + SUM() OVER () | production et prix par région |
+| 2 | JOIN + FILTER | prix et conformité export par qualité |
+| 3 | JOIN sur dim_date | saisonnalité mensuelle |
+| 4 | Jointure quadruple | classement des coopératives |
+| 5 | CTE + RANK + LAG + SUM() OVER | classement mensuel des régions et variation |
+| 6 | JOIN + GROUP BY | effet de la certification bio |
+
+### Résultats et lecture métier
+
+**Production par région.** Soubré porte 21,1 % du tonnage, San Pedro 16,1 %, Bondoukou seulement 4,8 %. La concentration au Sud-Ouest correspond à la géographie réelle de la cacaoculture ivoirienne. Le prix moyen pondéré varie peu d'une région à l'autre, de 848 à 858 FCFA/kg : cohérent avec un prix garanti fixé nationalement, l'écart résiduel venant du mix de qualités et de la part de bio.
+
+**Prix par qualité.** Grade A à 1 017 FCFA/kg en moyenne pondérée contre 1 006 en moyenne simple, soit 11 FCFA d'écart. La moyenne simple sous-estime le prix réellement payé, parce qu'elle donne le même poids à une pesée de 12 kg qu'à une pesée de 2 000 kg.
+
+**Conformité à la norme d'exportation.** 99,8 % du Grade A respecte le seuil de 8 % d'humidité, contre 82,5 % du Grade B et 13,3 % du Grade C. C'est le constat le plus exploitable du projet : le Grade C est massivement hors norme, ce qui justifierait un plan de formation au séchage dans les coopératives concernées.
+
+**Saisonnalité.** Pic à 2 209 tonnes en novembre, creux à 372 tonnes en août, soit un rapport de 1 à 6 entre le mois le plus fort et le plus faible. La part de Grade A passe de 38 % en campagne principale à 28 % en campagne intermédiaire : le cacao séché pendant l'harmattan est de meilleure qualité, et le prix moyen suit, de 875 à 795 FCFA/kg.
+
+**Certification bio.** À grade égal, la prime est nette : 1 101 contre 1 003 FCFA/kg sur le Grade A, soit environ 10 %. La coopérative en tête du classement, COOP-SOU-003, affiche 41 % de planteurs certifiés et le meilleur prix moyen du classement, 870 FCFA/kg. La certification est le levier de revenu le plus visible du jeu de données.
+
+### Choix d'outillage
+
+Les requêtes sont définies une seule fois, dans `requetes.py`. Le script `06_requetes_sql.py` les exécute et régénère `sql/02_requetes_analytiques.sql` à partir de ce module : le fichier collé dans le SQL Editor ne peut pas diverger de celui qui tourne dans le pipeline.
+
+Un mode `--local` exécute les mêmes requêtes sur les copies Parquet via DuckDB, qui comprend la syntaxe PostgreSQL utilisée ici. Cela permet de mettre au point une requête sans solliciter la base, et de travailler sans connexion.
+
+---
+
+## Étape 5 : tableau de bord
+
+### Choix techniques
+
+Le tableau de bord repart des résultats SQL archivés en Parquet à l'étape 4, jamais de la base : il se régénère hors connexion, et deux exécutions successives donnent exactement la même image.
+
+Piège rencontré : PostgreSQL renvoie les colonnes `NUMERIC` sous forme d'objets `Decimal`. Pandas les stocke alors en type `object` et Matplotlib refuse de les tracer. Une fonction `numeriser()` convertit systématiquement les colonnes de mesure avant tracé. La conversion est sans effet quand les données viennent de DuckDB, qui renvoie des flottants.
+
+Deux sorties : une planche complète de six graphiques, et un fichier par graphique dans `data/output/graphiques/`. Les fichiers individuels servent au rapport, où chaque graphique doit être commenté séparément, et aux slides. Résolution 150 dpi, comme exigé par la checklist.
+
+### Interprétation des six graphiques
+
+Un paragraphe par graphique, comme le demande le critère 3.
+
+**1. Production par région.** Soubré porte 21,1 % du tonnage collecté, San Pedro 16,1 %, contre 4,8 % pour Bondoukou. Les trois premières régions représentent à elles seules plus de la moitié des apports. La distinction par port d'exportation révèle un enjeu logistique : les régions du Sud-Ouest et du Centre-Ouest, qui pèsent près de 62 % du tonnage, transitent toutes par San Pedro. Une saturation de ce port bloquerait la majorité de la filière, ce qui plaide pour un suivi séparé des flux par port.
+
+**2. Saisonnalité des apports.** Le pic de novembre atteint 2 209 tonnes, le creux d'août 372 tonnes, soit un rapport de 1 à 6. Les six mois de campagne principale concentrent 70,8 % du tonnage annuel. Les deux saisons se superposent presque parfaitement, ce qui indique un rythme structurel et non un accident conjoncturel. Conséquence opérationnelle : le dimensionnement des équipes de pesée et des capacités de stockage doit se caler sur novembre, pas sur la moyenne annuelle.
+
+**3. Évolution du prix moyen pondéré.** Le prix se maintient autour de 875 FCFA/kg pendant toute la campagne principale, puis décroche brutalement à environ 795 FCFA/kg dès avril, soit une baisse de 9 %. Deux causes se cumulent : le prix garanti est révisé à la baisse pour la campagne intermédiaire, et la qualité se dégrade, la part de Grade A passant de 38 % à 28 %. Le planteur qui peut stocker a donc intérêt à livrer pendant la campagne principale.
+
+**4. Distribution des qualités et conformité export.** Le Grade B domine avec 9 505 tonnes, devant le Grade A à 8 594 tonnes. Le constat le plus actionnable du projet est le taux de conformité à la norme d'humidité de 8 % : 99,8 % pour le Grade A, 82,5 % pour le Grade B, mais seulement 13,3 % pour le Grade C. Près de 4 300 tonnes de Grade C sont donc invendables à l'export en l'état. Un programme de séchage ciblé sur les coopératives concernées transformerait une partie de ce volume en Grade B, avec un gain de 155 FCFA par kilo.
+
+**5. Effet de la certification bio.** À grade égal, la prime est constante autour de 10 % : 1 101 contre 1 003 FCFA/kg sur le Grade A, 905 contre 825 sur le Grade B. Rapportée au tonnage certifié, cette prime représente plusieurs centaines de millions de FCFA sur les deux campagnes. C'est le levier de revenu le plus direct pour un planteur, et il ne dépend pas de la qualité du séchage.
+
+**6. Classement des coopératives.** Les cinq premières coopératives sont toutes de Soubré, ce qui reflète la concentration régionale. COOP-SOU-003 se détache avec 1 172 tonnes et surtout 41 % de planteurs certifiés bio, contre 4 à 13 % pour les autres. Elle affiche aussi le meilleur prix moyen du classement, 870 FCFA/kg. Cette coopérative constitue un cas d'école à documenter : ce qu'elle fait pour atteindre ce taux de certification est reproductible ailleurs.
+
+### Limite à mentionner
+
+Les deux saisons se ressemblent beaucoup parce que le générateur leur applique la même loi saisonnière. Sur des données réelles, les aléas climatiques créeraient des écarts d'une campagne à l'autre. C'est une limite du jeu de données synthétique, à signaler dans la section 11 du rapport.
+
 ## À faire
 
 - [x] Confirmer auprès de l'enseignant le travail sans binôme
 - [x] Créer le dépôt GitHub public et partager le lien
 - [ ] Rédiger la déclaration d'usage des outils d'IA pour l'introduction du rapport
-- [ ] Créer le projet Supabase pour l'étape 3
+- [x] Créer le projet Supabase
+- [x] Capture d'écran du SQL Editor avec les 6 tables
+- [x] Capture du Table Editor avec le nombre de lignes
+- [x] Captures d'au moins 2 requêtes analytiques dans le SQL Editor
+- [ ] Insérer les 6 graphiques commentés dans la section 9 du rapport
