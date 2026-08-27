@@ -208,6 +208,38 @@ Les requêtes sont définies une seule fois, dans `requetes.py`. Le script `06_r
 
 Un mode `--local` exécute les mêmes requêtes sur les copies Parquet via DuckDB, qui comprend la syntaxe PostgreSQL utilisée ici. Cela permet de mettre au point une requête sans solliciter la base, et de travailler sans connexion.
 
+---
+
+## Étape 5 : tableau de bord
+
+### Choix techniques
+
+Le tableau de bord repart des résultats SQL archivés en Parquet à l'étape 4, jamais de la base : il se régénère hors connexion, et deux exécutions successives donnent exactement la même image.
+
+Piège rencontré : PostgreSQL renvoie les colonnes `NUMERIC` sous forme d'objets `Decimal`. Pandas les stocke alors en type `object` et Matplotlib refuse de les tracer. Une fonction `numeriser()` convertit systématiquement les colonnes de mesure avant tracé. La conversion est sans effet quand les données viennent de DuckDB, qui renvoie des flottants.
+
+Deux sorties : une planche complète de six graphiques, et un fichier par graphique dans `data/output/graphiques/`. Les fichiers individuels servent au rapport, où chaque graphique doit être commenté séparément, et aux slides. Résolution 150 dpi, comme exigé par la checklist.
+
+### Interprétation des six graphiques
+
+Un paragraphe par graphique, comme le demande le critère 3.
+
+**1. Production par région.** Soubré porte 21,1 % du tonnage collecté, San Pedro 16,1 %, contre 4,8 % pour Bondoukou. Les trois premières régions représentent à elles seules plus de la moitié des apports. La distinction par port d'exportation révèle un enjeu logistique : les régions du Sud-Ouest et du Centre-Ouest, qui pèsent près de 62 % du tonnage, transitent toutes par San Pedro. Une saturation de ce port bloquerait la majorité de la filière, ce qui plaide pour un suivi séparé des flux par port.
+
+**2. Saisonnalité des apports.** Le pic de novembre atteint 2 209 tonnes, le creux d'août 372 tonnes, soit un rapport de 1 à 6. Les six mois de campagne principale concentrent 70,8 % du tonnage annuel. Les deux saisons se superposent presque parfaitement, ce qui indique un rythme structurel et non un accident conjoncturel. Conséquence opérationnelle : le dimensionnement des équipes de pesée et des capacités de stockage doit se caler sur novembre, pas sur la moyenne annuelle.
+
+**3. Évolution du prix moyen pondéré.** Le prix se maintient autour de 875 FCFA/kg pendant toute la campagne principale, puis décroche brutalement à environ 795 FCFA/kg dès avril, soit une baisse de 9 %. Deux causes se cumulent : le prix garanti est révisé à la baisse pour la campagne intermédiaire, et la qualité se dégrade, la part de Grade A passant de 38 % à 28 %. Le planteur qui peut stocker a donc intérêt à livrer pendant la campagne principale.
+
+**4. Distribution des qualités et conformité export.** Le Grade B domine avec 9 505 tonnes, devant le Grade A à 8 594 tonnes. Le constat le plus actionnable du projet est le taux de conformité à la norme d'humidité de 8 % : 99,8 % pour le Grade A, 82,5 % pour le Grade B, mais seulement 13,3 % pour le Grade C. Près de 4 300 tonnes de Grade C sont donc invendables à l'export en l'état. Un programme de séchage ciblé sur les coopératives concernées transformerait une partie de ce volume en Grade B, avec un gain de 155 FCFA par kilo.
+
+**5. Effet de la certification bio.** À grade égal, la prime est constante autour de 10 % : 1 101 contre 1 003 FCFA/kg sur le Grade A, 905 contre 825 sur le Grade B. Rapportée au tonnage certifié, cette prime représente plusieurs centaines de millions de FCFA sur les deux campagnes. C'est le levier de revenu le plus direct pour un planteur, et il ne dépend pas de la qualité du séchage.
+
+**6. Classement des coopératives.** Les cinq premières coopératives sont toutes de Soubré, ce qui reflète la concentration régionale. COOP-SOU-003 se détache avec 1 172 tonnes et surtout 41 % de planteurs certifiés bio, contre 4 à 13 % pour les autres. Elle affiche aussi le meilleur prix moyen du classement, 870 FCFA/kg. Cette coopérative constitue un cas d'école à documenter : ce qu'elle fait pour atteindre ce taux de certification est reproductible ailleurs.
+
+### Limite à mentionner
+
+Les deux saisons se ressemblent beaucoup parce que le générateur leur applique la même loi saisonnière. Sur des données réelles, les aléas climatiques créeraient des écarts d'une campagne à l'autre. C'est une limite du jeu de données synthétique, à signaler dans la section 11 du rapport.
+
 ## À faire
 
 - [x] Confirmer auprès de l'enseignant le travail sans binôme
@@ -217,3 +249,4 @@ Un mode `--local` exécute les mêmes requêtes sur les copies Parquet via DuckD
 - [x] Capture d'écran du SQL Editor avec les 6 tables
 - [x] Capture du Table Editor avec le nombre de lignes
 - [x] Captures d'au moins 2 requêtes analytiques dans le SQL Editor
+- [ ] Insérer les 6 graphiques commentés dans la section 9 du rapport
