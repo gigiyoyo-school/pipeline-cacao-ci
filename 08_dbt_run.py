@@ -5,7 +5,7 @@ dbt s'installe a part, jamais dans les dependances du projet : il embarque ses
 propres versions de plusieurs bibliotheques et entre facilement en conflit
 avec pandas.
 
-    uv tool install dbt-postgres
+    uv tool install dbt-core --with dbt-postgres
 
 Le script :
   1. verifie que les variables DBT_* sont definies dans .env
@@ -58,11 +58,14 @@ def commande_dbt() -> list[str] | None:
 
     S'il est installe globalement (uv tool install), la commande est directe.
     Sinon uvx le telecharge et l'execute dans un environnement temporaire.
+
+    Dans les deux cas, c'est dbt-core qui fournit l'executable `dbt` ;
+    dbt-postgres n'est que l'adaptateur de base de donnees, ajoute a cote.
     """
     if shutil.which("dbt"):
         return ["dbt"]
     if shutil.which("uvx"):
-        return ["uvx", "--from", "dbt-postgres", "dbt"]
+        return ["uvx", "--from", "dbt-core", "--with", "dbt-postgres", "dbt"]
     return None
 
 
@@ -110,7 +113,7 @@ def main() -> None:
     base = commande_dbt()
     if base is None:
         alerte("dbt introuvable. Installez-le puis relancez ce script :")
-        console.print("  [bold]uv tool install dbt-postgres[/]")
+        console.print("  [bold]uv tool install dbt-core --with dbt-postgres[/]")
         return
 
     console.print(f"[dim]commande utilisee : {' '.join(base)}[/]")

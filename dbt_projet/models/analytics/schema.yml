@@ -1,0 +1,91 @@
+version: 2
+
+# ---------------------------------------------------------------------------
+# SOURCES
+# Les tables du schema en etoile existent deja : elles sont creees et
+# peuplees par le pipeline Python. dbt ne les cree pas, il les declare pour
+# pouvoir ecrire source('cacao', 'faits_pesees') dans les modeles, connaitre
+# les dependances, et surtout les tester.
+# ---------------------------------------------------------------------------
+sources:
+  - name: cacao
+    schema: public
+    description: Schema en etoile de la filiere cacao, charge par le pipeline Python
+    tables:
+      - name: faits_pesees
+        description: Table de faits, une ligne par pesee de cacao
+        columns:
+          - name: id_pesee
+            description: Identifiant du ticket de pesee, dimension degeneree
+            tests:
+              - unique
+              - not_null
+          - name: id_cooperative
+            description: Cle etrangere vers dim_cooperative
+            tests:
+              - not_null
+              # Verifie que chaque cle existe bien dans la dimension :
+              # c'est le test d'integrite referentielle de dbt
+              - relationships:
+                  to: source('cacao', 'dim_cooperative')
+                  field: id_cooperative
+          - name: id_qualite
+            tests:
+              - not_null
+              - relationships:
+                  to: source('cacao', 'dim_qualite')
+                  field: id_qualite
+          - name: tonnage_kg
+            description: Masse pesee en kilogrammes, mesure additive
+            tests:
+              - not_null
+
+      - name: dim_cooperative
+        description: Dimension cooperative
+        columns:
+          - name: id_cooperative
+            tests: [unique, not_null]
+          - name: code_cooperative
+            tests: [unique, not_null]
+
+      - name: dim_region
+        columns:
+          - name: nom_region
+            tests: [unique, not_null]
+
+      - name: dim_qualite
+        columns:
+          - name: nom_qualite
+            tests:
+              - unique
+              - not_null
+              # Le referentiel des grades est ferme : toute autre valeur
+              # signale une erreur de chargement
+              - accepted_values:
+                  values: ['Grade A', 'Grade B', 'Grade C', 'Hors grade']
+
+      - name: dim_planteur
+      - name: dim_date
+
+# ---------------------------------------------------------------------------
+# MODELES produits par dbt
+# ---------------------------------------------------------------------------
+models:
+  - name: perf_cooperatives
+    description: >
+      Performance de collecte par cooperative : tonnage, prix moyen pondere,
+      part de Grade A, conformite a la norme d'exportation, part de planteurs
+      certifies bio, et classement regional et national.
+    columns:
+      - name: code_cooperative
+        description: Code metier de la cooperative
+        tests: [unique, not_null]
+      - name: tonnes
+        description: Tonnage collecte sur la periode
+        tests: [not_null]
+      - name: prix_moyen_pondere
+        description: SUM(montant) / SUM(tonnage), et non AVG(prix)
+        tests: [not_null]
+      - name: rang_regional
+        description: Rang de la cooperative dans sa region, 1 = premiere
+        tests: [not_null]

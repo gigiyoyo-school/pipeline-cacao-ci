@@ -1,0 +1,18 @@
+# Profil de connexion dbt.
+#
+# Aucun mot de passe en clair : env_var() lit les variables du fichier .env
+# du projet. Ce fichier peut donc etre commite et rendu sans risque.
+
+cacao_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: "{{ env_var('DBT_HOST') }}"
+      port: "{{ env_var('DBT_PORT') | int }}"
+      user: "{{ env_var('DBT_USER') }}"
+      password: "{{ env_var('DBT_PASSWORD') }}"
+      dbname: "{{ env_var('DBT_DBNAME', 'postgres') }}"
+      schema: "{{ env_var('DBT_SCHEMA', 'public') }}"
+      sslmode: require        # Supabase refuse les connexions non chiffrees
+      threads: 1              # le pooler du plan gratuit limite les connexions

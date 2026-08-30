@@ -132,6 +132,7 @@ uv run 04_creer_schema.py          # schema en etoile dans Supabase
 uv run 05_charger_etoile.py        # peuplement des dimensions et des faits
 uv run 06_requetes_sql.py          # 6 requetes analytiques
 uv run 07_dashboard.py             # tableau de bord PNG
+uv tool install dbt-core --with dbt-postgres   # la commande dbt vient de dbt-core
 uv run 08_dbt_run.py               # modele dbt et ses tests
 ```
 

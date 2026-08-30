@@ -1,0 +1,15 @@
+name: cacao_analytics
+version: '1.0.0'
+config-version: 2
+
+profile: cacao_analytics
+
+model-paths: ['models']
+
+models:
+  cacao_analytics:
+    analytics:
+      # Les modeles de ce dossier deviennent des VUES dans Supabase.
+      # Mettre 'table' a la place materialiserait une vraie table physique :
+      # plus rapide a interroger, mais figee jusqu'au prochain dbt run.
+      +materialized: view
