@@ -286,15 +286,41 @@ Conséquence à assumer : le projet tourne avec pandas 2.2 en local et pandas 2.
 
 La base de métadonnées d'Airflow et Supabase sont deux bases distinctes. La première stocke l'état des DAG et des tâches, la seconde les données cacao. La confusion entre les deux est une question classique en soutenance.
 
+---
+
+## Étape 7 : notebook de rendu
+
+### Le problème à résoudre
+
+Un notebook autonome duplique le code des scripts, et les deux versions divergent à la première correction. Un notebook qui importe les modules du projet ne s'exécute plus si le correcteur l'ouvre seul dans Colab.
+
+Solution retenue : le notebook **embarque le code réel des scripts**, extrait automatiquement par analyse de l'arbre syntaxique au moment de la génération. Les commentaires du code sont conservés tels quels. Notebook et scripts ne peuvent donc pas diverger, et les chiffres affichés sont identiques à ceux du pipeline.
+
+### Deux garde-fous pour le `Run all`
+
+Le notebook **génère ses propres données** : il ne dépend d'aucun fichier extérieur, et le correcteur n'a rien à télécharger.
+
+Il **bascule sur DuckDB** si `SUPABASE_URL` n'est pas renseignée, ce qui sera le cas chez le correcteur. Les mêmes requêtes SQL s'exécutent alors en local sur les fichiers Parquet. Dans les deux cas, l'exécution se termine sans erreur.
+
+Piège corrigé au passage : `get_engine()` importait SQLAlchemy avant de vérifier la variable d'environnement, ce qui faisait échouer le notebook dans un environnement où la bibliothèque n'est pas installée. La vérification passe désormais en premier.
+
+### Vérification
+
+Le notebook a été exécuté de bout en bout, 31 cellules, sans aucune erreur, dans un environnement sans Supabase. Chiffres produits, identiques à ceux des scripts : 80 000 lignes extraites, 78 800 conservées, 1 200 doublons supprimés, 1 576 prix et 3 152 humidités imputés, 24 345 tonnes pour 20,73 milliards de FCFA.
+
+### Structure
+
+Page de garde conforme au sujet, contexte métier, schéma d'architecture, puis huit parties suivant le pipeline, et une conclusion couvrant difficultés, limites et améliorations possibles. La déclaration d'usage des outils d'IA figure en page de garde, comme l'exige la section 6.3 du sujet.
+
 ## À faire
 
 - [x] Confirmer auprès de l'enseignant le travail sans binôme
 - [x] Créer le dépôt GitHub public et partager le lien
 - [ ] Rédiger la déclaration d'usage des outils d'IA pour l'introduction du rapport
 - [x] Créer le projet Supabase
-- [ ] Capture d'écran du SQL Editor avec les 6 tables
-- [ ] Capture du Table Editor avec le nombre de lignes
-- [ ] Captures d'au moins 2 requêtes analytiques dans le SQL Editor
+- [x] Capture d'écran du SQL Editor avec les 6 tables
+- [x] Capture du Table Editor avec le nombre de lignes
+- [x] Captures d'au moins 2 requêtes analytiques dans le SQL Editor
 - [ ] Insérer les 6 graphiques commentés dans la section 9 du rapport
-- [ ] Capture de l'interface Airflow avec le DAG en vue Graph
-- [ ] Capture de docker compose ps avec les services actifs
+- [x] Capture de l'interface Airflow avec le DAG en vue Graph
+- [x] Capture de docker compose ps avec les services actifs

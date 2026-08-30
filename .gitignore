@@ -9,6 +9,9 @@ data/raw/*.csv
 data/interim/
 data/output/*.parquet
 
+# Dossier de travail du notebook
+data_notebook/
+
 # Python
 __pycache__/
 *.pyc
