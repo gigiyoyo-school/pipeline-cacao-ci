@@ -238,3 +238,88 @@
 [2026-08-30T11:57:52.973+0000] {logging_mixin.py:190} INFO - [2026-08-30T11:57:52.973+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/callbacks.py
 [2026-08-30T11:57:52.978+0000] {processor.py:927} WARNING - No viable dags retrieved from /opt/airflow/projet/dags/callbacks.py
 [2026-08-30T11:57:52.993+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/callbacks.py took 0.029 seconds
+[2026-08-30T11:58:23.362+0000] {processor.py:186} INFO - Started process (PID=1071) to work on /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T11:58:23.364+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/callbacks.py for tasks to queue
+[2026-08-30T11:58:23.370+0000] {logging_mixin.py:190} INFO - [2026-08-30T11:58:23.369+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T11:58:23.374+0000] {processor.py:927} WARNING - No viable dags retrieved from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T11:58:23.400+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/callbacks.py took 0.042 seconds
+[2026-08-30T11:58:53.706+0000] {processor.py:186} INFO - Started process (PID=1090) to work on /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T11:58:53.707+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/callbacks.py for tasks to queue
+[2026-08-30T11:58:53.710+0000] {logging_mixin.py:190} INFO - [2026-08-30T11:58:53.710+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T11:58:53.717+0000] {processor.py:927} WARNING - No viable dags retrieved from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T11:58:53.730+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/callbacks.py took 0.029 seconds
+[2026-08-30T11:59:24.138+0000] {processor.py:186} INFO - Started process (PID=1109) to work on /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T11:59:24.139+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/callbacks.py for tasks to queue
+[2026-08-30T11:59:24.143+0000] {logging_mixin.py:190} INFO - [2026-08-30T11:59:24.142+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T11:59:24.154+0000] {processor.py:927} WARNING - No viable dags retrieved from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T11:59:24.167+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/callbacks.py took 0.035 seconds
+[2026-08-30T11:59:54.550+0000] {processor.py:186} INFO - Started process (PID=1128) to work on /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T11:59:54.552+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/callbacks.py for tasks to queue
+[2026-08-30T11:59:54.554+0000] {logging_mixin.py:190} INFO - [2026-08-30T11:59:54.553+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T11:59:54.559+0000] {processor.py:927} WARNING - No viable dags retrieved from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T11:59:54.574+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/callbacks.py took 0.028 seconds
+[2026-08-30T12:00:24.931+0000] {processor.py:186} INFO - Started process (PID=1146) to work on /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:00:24.931+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/callbacks.py for tasks to queue
+[2026-08-30T12:00:24.933+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:00:24.932+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:00:24.936+0000] {processor.py:927} WARNING - No viable dags retrieved from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:00:24.948+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/callbacks.py took 0.021 seconds
+[2026-08-30T12:00:55.386+0000] {processor.py:186} INFO - Started process (PID=1157) to work on /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:00:55.388+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/callbacks.py for tasks to queue
+[2026-08-30T12:00:55.390+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:00:55.390+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:00:55.400+0000] {processor.py:927} WARNING - No viable dags retrieved from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:00:55.412+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/callbacks.py took 0.031 seconds
+[2026-08-30T12:01:25.830+0000] {processor.py:186} INFO - Started process (PID=1176) to work on /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:01:25.831+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/callbacks.py for tasks to queue
+[2026-08-30T12:01:25.833+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:01:25.833+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:01:25.844+0000] {processor.py:927} WARNING - No viable dags retrieved from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:01:25.862+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/callbacks.py took 0.037 seconds
+[2026-08-30T12:01:56.210+0000] {processor.py:186} INFO - Started process (PID=1195) to work on /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:01:56.211+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/callbacks.py for tasks to queue
+[2026-08-30T12:01:56.212+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:01:56.212+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:01:56.217+0000] {processor.py:927} WARNING - No viable dags retrieved from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:01:56.231+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/callbacks.py took 0.026 seconds
+[2026-08-30T12:02:26.628+0000] {processor.py:186} INFO - Started process (PID=1214) to work on /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:02:26.629+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/callbacks.py for tasks to queue
+[2026-08-30T12:02:26.630+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:02:26.630+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:02:26.639+0000] {processor.py:927} WARNING - No viable dags retrieved from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:02:26.656+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/callbacks.py took 0.034 seconds
+[2026-08-30T12:02:57.047+0000] {processor.py:186} INFO - Started process (PID=1233) to work on /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:02:57.049+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/callbacks.py for tasks to queue
+[2026-08-30T12:02:57.050+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:02:57.050+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:02:57.056+0000] {processor.py:927} WARNING - No viable dags retrieved from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:02:57.073+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/callbacks.py took 0.030 seconds
+[2026-08-30T12:03:27.474+0000] {processor.py:186} INFO - Started process (PID=1252) to work on /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:03:27.474+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/callbacks.py for tasks to queue
+[2026-08-30T12:03:27.476+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:03:27.475+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:03:27.480+0000] {processor.py:927} WARNING - No viable dags retrieved from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:03:27.493+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/callbacks.py took 0.024 seconds
+[2026-08-30T12:03:57.881+0000] {processor.py:186} INFO - Started process (PID=1271) to work on /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:03:57.882+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/callbacks.py for tasks to queue
+[2026-08-30T12:03:57.884+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:03:57.883+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:03:57.889+0000] {processor.py:927} WARNING - No viable dags retrieved from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:03:57.907+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/callbacks.py took 0.032 seconds
+[2026-08-30T12:04:28.327+0000] {processor.py:186} INFO - Started process (PID=1290) to work on /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:04:28.328+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/callbacks.py for tasks to queue
+[2026-08-30T12:04:28.330+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:04:28.330+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:04:28.341+0000] {processor.py:927} WARNING - No viable dags retrieved from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:04:28.353+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/callbacks.py took 0.031 seconds
+[2026-08-30T12:04:58.747+0000] {processor.py:186} INFO - Started process (PID=1309) to work on /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:04:58.748+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/callbacks.py for tasks to queue
+[2026-08-30T12:04:58.750+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:04:58.750+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:04:58.760+0000] {processor.py:927} WARNING - No viable dags retrieved from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:04:58.771+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/callbacks.py took 0.029 seconds
+[2026-08-30T12:05:29.149+0000] {processor.py:186} INFO - Started process (PID=1328) to work on /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:05:29.150+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/callbacks.py for tasks to queue
+[2026-08-30T12:05:29.153+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:05:29.152+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:05:29.156+0000] {processor.py:927} WARNING - No viable dags retrieved from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:05:29.173+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/callbacks.py took 0.029 seconds
+[2026-08-30T12:05:59.557+0000] {processor.py:186} INFO - Started process (PID=1347) to work on /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:05:59.558+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/callbacks.py for tasks to queue
+[2026-08-30T12:05:59.559+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:05:59.559+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:05:59.562+0000] {processor.py:927} WARNING - No viable dags retrieved from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:05:59.574+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/callbacks.py took 0.019 seconds
+[2026-08-30T12:06:29.955+0000] {processor.py:186} INFO - Started process (PID=1366) to work on /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:06:29.956+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/callbacks.py for tasks to queue
+[2026-08-30T12:06:29.959+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:06:29.959+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:06:29.965+0000] {processor.py:927} WARNING - No viable dags retrieved from /opt/airflow/projet/dags/callbacks.py
+[2026-08-30T12:06:29.984+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/callbacks.py took 0.036 seconds

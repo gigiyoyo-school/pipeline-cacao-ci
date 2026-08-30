@@ -288,3 +288,105 @@
 [2026-08-30T11:57:52.992+0000] {processor.py:925} INFO - DAG(s) 'pipeline_cacao_ci' retrieved from /opt/airflow/projet/dags/dag_pipeline_cacao.py
 [2026-08-30T11:57:53.018+0000] {logging_mixin.py:190} INFO - [2026-08-30T11:57:53.017+0000] {dag.py:3239} INFO - Sync 1 DAGs
 [2026-08-30T11:57:53.035+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/dag_pipeline_cacao.py took 0.075 seconds
+[2026-08-30T11:58:23.361+0000] {processor.py:186} INFO - Started process (PID=1068) to work on /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T11:58:23.364+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/dag_pipeline_cacao.py for tasks to queue
+[2026-08-30T11:58:23.370+0000] {logging_mixin.py:190} INFO - [2026-08-30T11:58:23.370+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T11:58:23.397+0000] {processor.py:925} INFO - DAG(s) 'pipeline_cacao_ci' retrieved from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T11:58:23.427+0000] {logging_mixin.py:190} INFO - [2026-08-30T11:58:23.427+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-08-30T11:58:23.456+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/dag_pipeline_cacao.py took 0.101 seconds
+[2026-08-30T11:58:53.704+0000] {processor.py:186} INFO - Started process (PID=1087) to work on /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T11:58:53.704+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/dag_pipeline_cacao.py for tasks to queue
+[2026-08-30T11:58:53.706+0000] {logging_mixin.py:190} INFO - [2026-08-30T11:58:53.706+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T11:58:53.723+0000] {processor.py:925} INFO - DAG(s) 'pipeline_cacao_ci' retrieved from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T11:58:53.753+0000] {logging_mixin.py:190} INFO - [2026-08-30T11:58:53.753+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-08-30T11:58:53.771+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/dag_pipeline_cacao.py took 0.075 seconds
+[2026-08-30T11:59:24.134+0000] {processor.py:186} INFO - Started process (PID=1106) to work on /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T11:59:24.135+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/dag_pipeline_cacao.py for tasks to queue
+[2026-08-30T11:59:24.138+0000] {logging_mixin.py:190} INFO - [2026-08-30T11:59:24.138+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T11:59:24.160+0000] {processor.py:925} INFO - DAG(s) 'pipeline_cacao_ci' retrieved from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T11:59:24.193+0000] {logging_mixin.py:190} INFO - [2026-08-30T11:59:24.192+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-08-30T11:59:24.212+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/dag_pipeline_cacao.py took 0.085 seconds
+[2026-08-30T11:59:54.548+0000] {processor.py:186} INFO - Started process (PID=1125) to work on /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T11:59:54.549+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/dag_pipeline_cacao.py for tasks to queue
+[2026-08-30T11:59:54.551+0000] {logging_mixin.py:190} INFO - [2026-08-30T11:59:54.551+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T11:59:54.569+0000] {processor.py:925} INFO - DAG(s) 'pipeline_cacao_ci' retrieved from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T11:59:54.595+0000] {logging_mixin.py:190} INFO - [2026-08-30T11:59:54.595+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-08-30T11:59:54.611+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/dag_pipeline_cacao.py took 0.070 seconds
+[2026-08-30T12:00:24.929+0000] {processor.py:186} INFO - Started process (PID=1143) to work on /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:00:24.930+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/dag_pipeline_cacao.py for tasks to queue
+[2026-08-30T12:00:24.931+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:00:24.931+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:00:24.943+0000] {processor.py:925} INFO - DAG(s) 'pipeline_cacao_ci' retrieved from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:00:24.968+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:00:24.967+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-08-30T12:00:24.985+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/dag_pipeline_cacao.py took 0.060 seconds
+[2026-08-30T12:00:55.384+0000] {processor.py:186} INFO - Started process (PID=1154) to work on /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:00:55.385+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/dag_pipeline_cacao.py for tasks to queue
+[2026-08-30T12:00:55.387+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:00:55.386+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:00:55.403+0000] {processor.py:925} INFO - DAG(s) 'pipeline_cacao_ci' retrieved from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:00:55.430+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:00:55.430+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-08-30T12:00:55.447+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/dag_pipeline_cacao.py took 0.071 seconds
+[2026-08-30T12:01:25.826+0000] {processor.py:186} INFO - Started process (PID=1173) to work on /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:01:25.827+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/dag_pipeline_cacao.py for tasks to queue
+[2026-08-30T12:01:25.829+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:01:25.828+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:01:25.842+0000] {processor.py:925} INFO - DAG(s) 'pipeline_cacao_ci' retrieved from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:01:25.871+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:01:25.871+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-08-30T12:01:25.887+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/dag_pipeline_cacao.py took 0.067 seconds
+[2026-08-30T12:01:56.207+0000] {processor.py:186} INFO - Started process (PID=1192) to work on /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:01:56.208+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/dag_pipeline_cacao.py for tasks to queue
+[2026-08-30T12:01:56.210+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:01:56.210+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:01:56.228+0000] {processor.py:925} INFO - DAG(s) 'pipeline_cacao_ci' retrieved from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:01:56.255+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:01:56.255+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-08-30T12:01:56.274+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/dag_pipeline_cacao.py took 0.073 seconds
+[2026-08-30T12:02:26.625+0000] {processor.py:186} INFO - Started process (PID=1211) to work on /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:02:26.626+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/dag_pipeline_cacao.py for tasks to queue
+[2026-08-30T12:02:26.628+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:02:26.628+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:02:26.646+0000] {processor.py:925} INFO - DAG(s) 'pipeline_cacao_ci' retrieved from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:02:26.676+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:02:26.676+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-08-30T12:02:26.695+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/dag_pipeline_cacao.py took 0.079 seconds
+[2026-08-30T12:02:57.047+0000] {processor.py:186} INFO - Started process (PID=1230) to work on /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:02:57.047+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/dag_pipeline_cacao.py for tasks to queue
+[2026-08-30T12:02:57.050+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:02:57.049+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:02:57.066+0000] {processor.py:925} INFO - DAG(s) 'pipeline_cacao_ci' retrieved from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:02:57.094+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:02:57.094+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-08-30T12:02:57.111+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/dag_pipeline_cacao.py took 0.072 seconds
+[2026-08-30T12:03:27.471+0000] {processor.py:186} INFO - Started process (PID=1249) to work on /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:03:27.472+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/dag_pipeline_cacao.py for tasks to queue
+[2026-08-30T12:03:27.473+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:03:27.473+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:03:27.492+0000] {processor.py:925} INFO - DAG(s) 'pipeline_cacao_ci' retrieved from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:03:27.516+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:03:27.516+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-08-30T12:03:27.532+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/dag_pipeline_cacao.py took 0.067 seconds
+[2026-08-30T12:03:57.877+0000] {processor.py:186} INFO - Started process (PID=1268) to work on /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:03:57.878+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/dag_pipeline_cacao.py for tasks to queue
+[2026-08-30T12:03:57.880+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:03:57.880+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:03:57.900+0000] {processor.py:925} INFO - DAG(s) 'pipeline_cacao_ci' retrieved from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:03:57.947+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:03:57.947+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-08-30T12:03:57.973+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/dag_pipeline_cacao.py took 0.103 seconds
+[2026-08-30T12:04:28.323+0000] {processor.py:186} INFO - Started process (PID=1287) to work on /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:04:28.324+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/dag_pipeline_cacao.py for tasks to queue
+[2026-08-30T12:04:28.326+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:04:28.326+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:04:28.344+0000] {processor.py:925} INFO - DAG(s) 'pipeline_cacao_ci' retrieved from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:04:28.370+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:04:28.370+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-08-30T12:04:28.387+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/dag_pipeline_cacao.py took 0.070 seconds
+[2026-08-30T12:04:58.743+0000] {processor.py:186} INFO - Started process (PID=1306) to work on /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:04:58.744+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/dag_pipeline_cacao.py for tasks to queue
+[2026-08-30T12:04:58.746+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:04:58.746+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:04:58.763+0000] {processor.py:925} INFO - DAG(s) 'pipeline_cacao_ci' retrieved from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:04:58.790+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:04:58.790+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-08-30T12:04:58.807+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/dag_pipeline_cacao.py took 0.070 seconds
+[2026-08-30T12:05:29.146+0000] {processor.py:186} INFO - Started process (PID=1325) to work on /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:05:29.147+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/dag_pipeline_cacao.py for tasks to queue
+[2026-08-30T12:05:29.149+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:05:29.149+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:05:29.164+0000] {processor.py:925} INFO - DAG(s) 'pipeline_cacao_ci' retrieved from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:05:29.193+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:05:29.192+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-08-30T12:05:29.210+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/dag_pipeline_cacao.py took 0.071 seconds
+[2026-08-30T12:05:59.555+0000] {processor.py:186} INFO - Started process (PID=1344) to work on /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:05:59.556+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/dag_pipeline_cacao.py for tasks to queue
+[2026-08-30T12:05:59.557+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:05:59.557+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:05:59.571+0000] {processor.py:925} INFO - DAG(s) 'pipeline_cacao_ci' retrieved from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:05:59.595+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:05:59.595+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-08-30T12:05:59.612+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/dag_pipeline_cacao.py took 0.060 seconds
+[2026-08-30T12:06:29.952+0000] {processor.py:186} INFO - Started process (PID=1363) to work on /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:06:29.953+0000] {processor.py:914} INFO - Processing file /opt/airflow/projet/dags/dag_pipeline_cacao.py for tasks to queue
+[2026-08-30T12:06:29.956+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:06:29.955+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:06:29.981+0000] {processor.py:925} INFO - DAG(s) 'pipeline_cacao_ci' retrieved from /opt/airflow/projet/dags/dag_pipeline_cacao.py
+[2026-08-30T12:06:30.016+0000] {logging_mixin.py:190} INFO - [2026-08-30T12:06:30.016+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-08-30T12:06:30.043+0000] {processor.py:208} INFO - Processing /opt/airflow/projet/dags/dag_pipeline_cacao.py took 0.100 seconds

@@ -2340,3 +2340,169 @@ File Path                                       PID    Runtime      # DAGs    # 
 /opt/airflow/projet/dags/dag_pipeline_cacao.py                           1           0  0.11s           2026-08-30T11:57:22                      12
 /opt/airflow/projet/dags/callbacks.py                                    0           0  0.05s           2026-08-30T11:57:22                       3
 ================================================================================
+[2026-08-30T11:58:01.106+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                       PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/projet/dags/dag_pipeline_cacao.py                           1           0  0.09s           2026-08-30T11:57:53                      12
+/opt/airflow/projet/dags/callbacks.py                                    0           0  0.04s           2026-08-30T11:57:52                       3
+================================================================================
+[2026-08-30T11:58:31.482+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                       PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/projet/dags/dag_pipeline_cacao.py                           1           0  0.12s           2026-08-30T11:58:23                      12
+/opt/airflow/projet/dags/callbacks.py                                    0           0  0.05s           2026-08-30T11:58:23                       3
+================================================================================
+[2026-08-30T11:59:01.823+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                       PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/projet/dags/dag_pipeline_cacao.py                           1           0  0.09s           2026-08-30T11:58:53                      12
+/opt/airflow/projet/dags/callbacks.py                                    0           0  0.04s           2026-08-30T11:58:53                       3
+================================================================================
+[2026-08-30T11:59:07.885+0000] {manager.py:821} INFO - Searching for files in /opt/airflow/projet/dags
+[2026-08-30T11:59:07.891+0000] {manager.py:824} INFO - There are 2 files in /opt/airflow/projet/dags
+[2026-08-30T11:59:32.249+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                       PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/projet/dags/dag_pipeline_cacao.py                           1           0  0.11s           2026-08-30T11:59:24                      12
+/opt/airflow/projet/dags/callbacks.py                                    0           0  0.05s           2026-08-30T11:59:24                       3
+================================================================================
+[2026-08-30T12:00:02.673+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                       PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/projet/dags/dag_pipeline_cacao.py                           1           0  0.09s           2026-08-30T11:59:54                      12
+/opt/airflow/projet/dags/callbacks.py                                    0           0  0.04s           2026-08-30T11:59:54                       3
+================================================================================
+[2026-08-30T12:00:33.066+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                       PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/projet/dags/dag_pipeline_cacao.py                           1           0  0.07s           2026-08-30T12:00:24                      12
+/opt/airflow/projet/dags/callbacks.py                                    0           0  0.03s           2026-08-30T12:00:24                       3
+================================================================================
+[2026-08-30T12:01:03.514+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                       PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/projet/dags/dag_pipeline_cacao.py                           1           0  0.09s           2026-08-30T12:00:55                      12
+/opt/airflow/projet/dags/callbacks.py                                    0           0  0.05s           2026-08-30T12:00:55                       3
+================================================================================
+[2026-08-30T12:01:33.958+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                       PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/projet/dags/dag_pipeline_cacao.py                           1           0  0.08s           2026-08-30T12:01:25                      12
+/opt/airflow/projet/dags/callbacks.py                                    0           0  0.05s           2026-08-30T12:01:25                       3
+================================================================================
+[2026-08-30T12:02:04.310+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                       PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/projet/dags/dag_pipeline_cacao.py                           1           0  0.10s           2026-08-30T12:01:56                      12
+/opt/airflow/projet/dags/callbacks.py                                    0           0  0.04s           2026-08-30T12:01:56                       3
+================================================================================
+[2026-08-30T12:02:34.766+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                       PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/projet/dags/dag_pipeline_cacao.py                           1           0  0.10s           2026-08-30T12:02:26                      12
+/opt/airflow/projet/dags/callbacks.py                                    0           0  0.05s           2026-08-30T12:02:26                       3
+================================================================================
+[2026-08-30T12:03:05.194+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                       PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/projet/dags/dag_pipeline_cacao.py                           1           0  0.09s           2026-08-30T12:02:57                      12
+/opt/airflow/projet/dags/callbacks.py                                    0           0  0.04s           2026-08-30T12:02:57                       3
+================================================================================
+[2026-08-30T12:03:35.615+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                       PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/projet/dags/dag_pipeline_cacao.py                           1           0  0.08s           2026-08-30T12:03:27                      12
+/opt/airflow/projet/dags/callbacks.py                                    0           0  0.04s           2026-08-30T12:03:27                       3
+================================================================================
+[2026-08-30T12:04:06.043+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                       PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/projet/dags/dag_pipeline_cacao.py                           1           0  0.12s           2026-08-30T12:03:57                      12
+/opt/airflow/projet/dags/callbacks.py                                    0           0  0.05s           2026-08-30T12:03:57                       3
+================================================================================
+[2026-08-30T12:04:08.070+0000] {manager.py:821} INFO - Searching for files in /opt/airflow/projet/dags
+[2026-08-30T12:04:08.076+0000] {manager.py:824} INFO - There are 2 files in /opt/airflow/projet/dags
+[2026-08-30T12:04:36.475+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                       PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/projet/dags/dag_pipeline_cacao.py                           1           0  0.09s           2026-08-30T12:04:28                      12
+/opt/airflow/projet/dags/callbacks.py                                    0           0  0.05s           2026-08-30T12:04:28                       3
+================================================================================
+[2026-08-30T12:05:06.874+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                       PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/projet/dags/dag_pipeline_cacao.py                           1           0  0.09s           2026-08-30T12:04:58                      12
+/opt/airflow/projet/dags/callbacks.py                                    0           0  0.04s           2026-08-30T12:04:58                       3
+================================================================================
+[2026-08-30T12:05:37.272+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                       PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/projet/dags/dag_pipeline_cacao.py                           1           0  0.09s           2026-08-30T12:05:29                      12
+/opt/airflow/projet/dags/callbacks.py                                    0           0  0.04s           2026-08-30T12:05:29                       3
+================================================================================
+[2026-08-30T12:06:07.686+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                       PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/projet/dags/dag_pipeline_cacao.py                           1           0  0.07s           2026-08-30T12:05:59                      12
+/opt/airflow/projet/dags/callbacks.py                                    0           0  0.03s           2026-08-30T12:05:59                       3
+================================================================================
+[2026-08-30T12:06:38.079+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                       PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/projet/dags/dag_pipeline_cacao.py                           1           0  0.12s           2026-08-30T12:06:30                      12
+/opt/airflow/projet/dags/callbacks.py                                    0           0  0.05s           2026-08-30T12:06:29                       3
+================================================================================
