@@ -1,28 +1,57 @@
+# ============================================================
 # Secrets
+# ============================================================
 .env
+.env.local
 
+# ============================================================
 # Environnement virtuel uv
+# ============================================================
 .venv/
 
-# Donnees generees
+# ============================================================
+# Donnees
+# Les fichiers sources et les etapes intermediaires ne sont pas
+# versionnes : ils se regenerent a l'identique avec
+# 01_generer_dataset.py, dont la graine est fixe.
+# En revanche data/output/ reste versionne (dashboard, graphiques,
+# rapports JSON) : ce sont des resultats auxquels le rapport renvoie.
+# ============================================================
 data/raw/*.csv
 data/interim/
 data/output/*.parquet
 
-# Dossier de travail du notebook
+# Dossier de travail du notebook, recree a chaque execution
 data_notebook/
 
-# Artefacts dbt
+# ============================================================
+# Airflow
+# ============================================================
+logs/
+airflow.db
+airflow.cfg
+webserver_config.py
+
+# ============================================================
+# dbt
+# ============================================================
 dbt_projet/target/
 dbt_projet/dbt_packages/
 dbt_projet/logs/
-logs/
+.user.yml
 
+# ============================================================
 # Python
+# ============================================================
 __pycache__/
-*.pyc
+*.py[cod]
 .pytest_cache/
 .ipynb_checkpoints/
+*.egg-info/
 
-# PyCharm
+# ============================================================
+# Editeurs et systeme
+# ============================================================
 .idea/
+.vscode/
+.DS_Store
