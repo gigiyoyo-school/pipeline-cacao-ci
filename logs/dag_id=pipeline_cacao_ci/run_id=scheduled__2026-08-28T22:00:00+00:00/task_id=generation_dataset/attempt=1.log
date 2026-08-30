@@ -1,0 +1,58 @@
+[2026-08-30T11:34:52.122+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-08-30T11:34:52.131+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: pipeline_cacao_ci.generation_dataset scheduled__2026-08-28T22:00:00+00:00 [queued]>
+[2026-08-30T11:34:52.134+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: pipeline_cacao_ci.generation_dataset scheduled__2026-08-28T22:00:00+00:00 [queued]>
+[2026-08-30T11:34:52.134+0000] {taskinstance.py:2867} INFO - Starting attempt 1 of 3
+[2026-08-30T11:34:52.139+0000] {taskinstance.py:2890} INFO - Executing <Task(PythonOperator): generation_dataset> on 2026-08-28 22:00:00+00:00
+[2026-08-30T11:34:52.141+0000] {standard_task_runner.py:72} INFO - Started process 218 to run task
+[2026-08-30T11:34:52.143+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'pipeline_cacao_ci', 'generation_dataset', 'scheduled__2026-08-28T22:00:00+00:00', '--job-id', '3', '--raw', '--subdir', 'DAGS_FOLDER/dag_pipeline_cacao.py', '--cfg-path', '/tmp/tmpvs4uqtgq']
+[2026-08-30T11:34:52.144+0000] {standard_task_runner.py:105} INFO - Job 3: Subtask generation_dataset
+[2026-08-30T11:34:52.168+0000] {task_command.py:467} INFO - Running <TaskInstance: pipeline_cacao_ci.generation_dataset scheduled__2026-08-28T22:00:00+00:00 [running]> on host 958268f5cd7a
+[2026-08-30T11:34:52.287+0000] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data_engineering' AIRFLOW_CTX_DAG_ID='pipeline_cacao_ci' AIRFLOW_CTX_TASK_ID='generation_dataset' AIRFLOW_CTX_EXECUTION_DATE='2026-08-28T22:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-08-28T22:00:00+00:00'
+[2026-08-30T11:34:52.287+0000] {taskinstance.py:732} INFO - ::endgroup::
+[2026-08-30T11:34:52.298+0000] {dag_pipeline_cacao.py:69} INFO - Execution de 01_generer_dataset
+[2026-08-30T11:34:52.765+0000] {logging_mixin.py:190} INFO - ╭─────────────────────────────────╮
+│ ETAPE 1 : generation du dataset │
+╰─── filiere cacao ivoirienne ────╯
+[2026-08-30T11:34:52.766+0000] {logging_mixin.py:190} INFO - > Construction des referentiels
+[2026-08-30T11:34:52.769+0000] {logging_mixin.py:190} INFO - OK 40 cooperatives et 5,000 planteurs
+[2026-08-30T11:34:52.769+0000] {logging_mixin.py:190} INFO - > Generation des pesees
+[2026-08-30T11:34:52.861+0000] {logging_mixin.py:190} INFO - OK 78,800 pesees generees du 2022-10-01 au 2024-09-30
+[2026-08-30T11:34:52.861+0000] {logging_mixin.py:190} INFO - > Injection des defauts de terrain
+[2026-08-30T11:34:52.862+0000] {logging_mixin.py:190} INFO -   humidite manquante   : 3,152 lignes
+[2026-08-30T11:34:52.862+0000] {logging_mixin.py:190} INFO -   prix aberrant (-1)   : 1,576 lignes
+[2026-08-30T11:34:52.902+0000] {logging_mixin.py:190} INFO -   erreurs de saisie    : 2,364 lignes
+[2026-08-30T11:34:52.904+0000] {logging_mixin.py:190} INFO -   doublons de scan     : 1,200 lignes
+[2026-08-30T11:34:52.931+0000] {logging_mixin.py:190} INFO - > Ecriture des fichiers
+[2026-08-30T11:34:53.082+0000] {logging_mixin.py:190} INFO - OK pesees_cacao_ci_80k.csv           80,000 lignes  5.6 Mo
+[2026-08-30T11:34:53.089+0000] {logging_mixin.py:190} INFO - OK referentiel_planteurs.csv          5,000 lignes  218.0 Ko
+[2026-08-30T11:34:53.092+0000] {logging_mixin.py:190} INFO - OK referentiel_cooperatives.csv          40 lignes  2.9 Ko
+[2026-08-30T11:34:53.092+0000] {logging_mixin.py:190} INFO - > Verification des corrections
+[2026-08-30T11:34:53.102+0000] {logging_mixin.py:190} INFO -   Prix et humidite par grade (le prix doit decroitre)  
+┏━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┓
+┃ qualite    ┃     nb ┃ prix_moyen ┃ humidite_moyenne ┃
+┡━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━┩
+│ Grade A    │ 27,606 │    1,006.2 │              6.6 │
+│ Grade B    │ 30,792 │      828.3 │              7.6 │
+│ Grade C    │ 15,874 │      675.2 │              8.6 │
+│ Hors grade │   4119 │      500.5 │             10.2 │
+└────────────┴────────┴────────────┴──────────────────┘
+[2026-08-30T11:34:53.118+0000] {logging_mixin.py:190} INFO -                Repartition par campagne                
+┏━━━━━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ campagne      ┃ nb_pesees ┃   tonnage_kg ┃ part_pct ┃
+┡━━━━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ intermediaire │    22,903 │  7,103,231.1 │     29.3 │
+│ principale    │    55,488 │ 17,129,449.5 │     70.7 │
+└───────────────┴───────────┴──────────────┴──────────┘
+[2026-08-30T11:34:53.127+0000] {logging_mixin.py:190} INFO -   lignes exploitables telles quelles   : 78,467 sur 80,000
+[2026-08-30T11:34:53.128+0000] {logging_mixin.py:190} INFO -   couples region-cooperative distincts  : 40 (attendu 40)
+[2026-08-30T11:34:53.128+0000] {logging_mixin.py:190} INFO -   planteurs presents dans plusieurs regions : 0 (attendu 0)
+[2026-08-30T11:34:53.128+0000] {logging_mixin.py:190} INFO - OK Hierarchie region / cooperative / planteur coherente
+[2026-08-30T11:34:53.131+0000] {logging_mixin.py:190} INFO - 
+Le dataset est reproductible : meme graine, memes donnees. Les fichiers restent 
+hors du depot Git, ce script suffit a les recreer.
+[2026-08-30T11:34:53.136+0000] {python.py:240} INFO - Done. Returned value was: 01_generer_dataset
+[2026-08-30T11:34:53.148+0000] {taskinstance.py:341} INFO - ::group::Post task execution logs
+[2026-08-30T11:34:53.148+0000] {taskinstance.py:353} INFO - Marking task as SUCCESS. dag_id=pipeline_cacao_ci, task_id=generation_dataset, run_id=scheduled__2026-08-28T22:00:00+00:00, execution_date=20260828T220000, start_date=20260830T113452, end_date=20260830T113453
+[2026-08-30T11:34:53.168+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-08-30T11:34:53.182+0000] {taskinstance.py:3901} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-08-30T11:34:53.183+0000] {local_task_job_runner.py:245} INFO - ::endgroup::
