@@ -12,6 +12,12 @@ data/output/*.parquet
 # Dossier de travail du notebook
 data_notebook/
 
+# Artefacts dbt
+dbt_projet/target/
+dbt_projet/dbt_packages/
+dbt_projet/logs/
+logs/
+
 # Python
 __pycache__/
 *.pyc
