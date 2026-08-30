@@ -312,15 +312,49 @@ Le notebook a été exécuté de bout en bout, 31 cellules, sans aucune erreur, 
 
 Page de garde conforme au sujet, contexte métier, schéma d'architecture, puis huit parties suivant le pipeline, et une conclusion couvrant difficultés, limites et améliorations possibles. La déclaration d'usage des outils d'IA figure en page de garde, comme l'exige la section 6.3 du sujet.
 
+---
+
+## Étape 7 (suite) : modèle dbt et README
+
+### dbt
+
+Le modèle `perf_cooperatives` produit une vue de performance par coopérative : tonnage, kilos par planteur, prix moyen pondéré, part de Grade A, taux de conformité export, part de planteurs certifiés, rang régional et rang national.
+
+Il utilise `source('cacao', 'faits_pesees')` plutôt que le nom brut des tables. dbt connaît ainsi les dépendances du modèle et peut tester les tables amont, qui sont créées par le pipeline Python et non par dbt.
+
+Tests déclarés dans `schema.yml` : `unique` et `not_null` sur `id_pesee`, `relationships` sur deux clés étrangères (test d'intégrité référentielle), `accepted_values` sur les quatre grades, plus les tests sur le modèle lui-même. Le barème n'en demande qu'un.
+
+dbt s'installe à part, jamais dans les dépendances du projet : il embarque ses propres versions de plusieurs bibliothèques et entre en conflit avec pandas.
+
+Erreur rencontrée à l'installation : `uv tool install dbt-postgres` échoue avec « No executables are provided by package ». `dbt-postgres` est un adaptateur de base de données, il n'expose aucun exécutable ; la commande `dbt` est fournie par `dbt-core`. La bonne commande est donc `uv tool install dbt-core --with dbt-postgres`, qui installe l'exécutable et lui adjoint l'adaptateur PostgreSQL.
+
+Le SQL du modèle a été validé en local sur les fichiers Parquet avant tout `dbt run`, en remplaçant les références Jinja par les noms de tables : 40 lignes produites, une par coopérative.
+
+### README
+
+Description, badges, schéma d'architecture en ASCII, schéma en étoile, stack technique, résultats clés avec trois constats métier chiffrés, instructions d'installation et d'exécution, structure du dépôt, choix techniques notables et limites connues.
+
+La déclaration d'usage des outils d'IA y figure également, en plus de la page de garde du notebook et de l'introduction du rapport.
+
+---
+
+## Étape 8 : schémas et rapport
+
+### Schémas générés par code
+
+Les deux schémas exigés, architecture du pipeline et modèle dimensionnel, sont produits par `10_schemas.py` avec Matplotlib plutôt que dessinés dans draw.io. Ils se régénèrent si le pipeline évolue, et restent donc cohérents avec lui. Sortie en 200 dpi.
+
 ## À faire
 
 - [x] Confirmer auprès de l'enseignant le travail sans binôme
 - [x] Créer le dépôt GitHub public et partager le lien
 - [ ] Rédiger la déclaration d'usage des outils d'IA pour l'introduction du rapport
 - [x] Créer le projet Supabase
-- [x] Capture d'écran du SQL Editor avec les 6 tables
-- [x] Capture du Table Editor avec le nombre de lignes
-- [x] Captures d'au moins 2 requêtes analytiques dans le SQL Editor
+- [ ] Capture d'écran du SQL Editor avec les 6 tables
+- [ ] Capture du Table Editor avec le nombre de lignes
+- [ ] Captures d'au moins 2 requêtes analytiques dans le SQL Editor
 - [ ] Insérer les 6 graphiques commentés dans la section 9 du rapport
-- [x] Capture de l'interface Airflow avec le DAG en vue Graph
-- [x] Capture de docker compose ps avec les services actifs
+- [ ] Capture de la vue perf_cooperatives dans Supabase
+- [ ] Remplacer VOTRE_COMPTE par le vrai compte GitHub dans le README
+- [ ] Capture de l'interface Airflow avec le DAG en vue Graph
+- [ ] Capture de docker compose ps avec les services actifs
